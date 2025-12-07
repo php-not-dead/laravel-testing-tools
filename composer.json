@@ -12,7 +12,8 @@
         "php": "^8.5",
         "opay-dev/php-linting-tools": "1.*",
         "phpunit/phpunit": "12.*",
-        "mockery/mockery": "1.*"
+        "mockery/mockery": "1.*",
+        "slevomat/coding-standard": "8.25.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -37,6 +38,12 @@
             "vendor/bin/php-cs-fixer fix . --verbose",
             "vendor/bin/phpcbf -p --standard=src/Config/phpcs.xml . --ignore=./vendor"
         ]
+    },
+    "provide": {
+        "slevomat/coding-standard": "8.15.0"
+    },
+    "replace": {
+        "slevomat/coding-standard": "8.25.1"
     },
     "config": {
         "allow-plugins": {
