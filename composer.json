@@ -34,16 +34,10 @@
             "Test\\": "test"
         }
     },
-    "scripts": {
-        "lint": [
-            "vendor/bin/php-cs-fixer fix . --dry-run --verbose",
-            "vendor/bin/phpcs -p --standard=src/Config/phpcs.xml . --ignore=./vendor"
-        ],
-        "lint:fix": [
-            "vendor/bin/php-cs-fixer fix . --verbose",
-            "vendor/bin/phpcbf -p --standard=src/Config/phpcs.xml . --ignore=./vendor"
-        ]
-    },
+    "bin": [
+        "bin/unit",
+        "bin/lint"
+    ],
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
