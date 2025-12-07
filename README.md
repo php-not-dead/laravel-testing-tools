@@ -5,6 +5,8 @@ PHP not Dead :: Laravel testing tools
 
 This package provides preconfigured `PHP Unit` and `Linting Tools` packages for Laravel projects.
 
+It also includes vendor testing tool that can be run during GitHub workflow to disable PR merging if some vendors do not meet production requirements.
+
 ### PHP Unit configuration contains
 
 1. Test Cases
@@ -50,3 +52,39 @@ Run Linting tools _(run both PHP CS and PHP CS Fixer)_:
 Automatic Lint fixing:
 
 > $ vendor/bin/lint fix
+
+### Running Vendors Validator in GitHub Workflow
+
+.env
+```dotenv
+VENDORS_VALIDATOR_URL=https://raw.githubusercontent.com/php-not-dead/laravel-testing-tools/refs/heads/main/src/Helper/vendors_validator.php
+VENDORS_VALIDATOR_SKIP=roave/security-advisories
+```
+
+workflow.yml
+```yaml
+  vendors:
+     name: Validate vendors
+     runs-on: ubuntu-latest
+     steps:
+        - name: Checkout required files
+          uses: actions/checkout@v4
+          with:
+             sparse-checkout: |
+                .github/.env
+                composer.lock
+             sparse-checkout-cone-mode: false
+
+        - name: Read .env file
+          uses: xom9ikk/dotenv@v2.3.0
+          with:
+             path: .github/
+
+        - name: Download vendors_validator
+          run: |
+             curl -sSL ${{ env.VENDORS_VALIDATOR_URL }} \
+               -o vendors_validator.php
+
+        - name: Validate vendors
+          run: php validate_vendors.php --skip=${{ env.VENDORS_VALIDATOR_SKIP }}
+```
