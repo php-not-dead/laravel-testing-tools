@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<ruleset>
+    <rule ref="OpaySniffs"/>
+
+    <!-- Include rule excluded by OpaySniffs and fix it with VendorFixer -->
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <severity>5</severity>
+    </rule>
+
+    <!-- Allow empty catch statements -->
+    <rule ref="Generic.CodeAnalysis.EmptyStatement.DetectedCatch">
+        <severity>0</severity>
+    </rule>
+
+    <rule ref="OpaySniffs.Classes.NonExistingUses">
+        <properties>
+            <property name="ignoreGlobalNamespaces" type="array">
+                <element value="OpenApi"/>
+                <element value="JetBrains"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="OpaySniffs.Classes.ForbiddenClasses">
+        <properties>
+            <property name="forbiddenExtends" type="array">
+                <element key="Illuminate\Foundation\Http\FormRequest" value="LaravelTestingTools\LaravelCore\DataTransferObject\Request"/>
+                <element key="Symfony\Component\HttpFoundation\Exception\BadRequestException" value="LaravelTestingTools\LaravelCore\Exception\HttpException\BadRequestException"/>
+                <element key="Illuminate\Database\Eloquent\Model" value="LaravelTestingTools\LaravelCore\Model\Model"/>
+                <element key="Illuminate\Database\Eloquent\Factories\Factory" value="LaravelTestingTools\LaravelCore\Database\Faker"/>
+                <element key="Illuminate\Database\Migrations\Migration" value="LaravelTestingTools\LaravelCore\Database\Migration"/>
+                <element key="Illuminate\Cache\CacheManager" value="LaravelTestingTools\LaravelCore\Cache\CacheManager"/>
+                <element key="Illuminate\Routing\ViewController" value="LaravelTestingTools\LaravelCore\Http\Controller\ViewController"/>
+                <!-- Collections usage by mistake -->
+                <element key="Nwidart\Modules\Collection" value="Illuminate\Support\Collection"/>
+                <element key="Ramsey\Collection\Collection" value="Illuminate\Support\Collection"/>
+                <element key="Spiral\RoadRunner\Console\Repository\Collection" value="Illuminate\Support\Collection"/>
+                <element key="Cassandra\Collection" value="Illuminate\Support\Collection"/>
+                <element key="Couchbase\Collection" value="Illuminate\Support\Collection"/>
+                <element key="mysql_xdevapi\Collection" value="Illuminate\Support\Collection"/>
+                <element key="Cassandra\Type\Collection" value="Illuminate\Support\Collection"/>
+                <!-- One of -->
+                <element key="Illuminate\Http\Resources\Json\JsonResource" value="LaravelTestingTools\LaravelCore\DataTransferObject\Response,
+                    LaravelTestingTools\LaravelCore\DataTransferObject\ClientResponse
+                "/>
+                <element key="Illuminate\Routing\Controller" value="LaravelTestingTools\LaravelCore\Http\Controller\PrivateController,
+                    LaravelTestingTools\LaravelCore\Http\Controller\ApiController,
+                    LaravelTestingTools\LaravelCore\Http\Controller\ViewController,
+                "/>
+                <element key="LaravelTestingTools\LaravelCore\Http\Controller\Controller" value="LaravelTestingTools\LaravelCore\Http\Controller\PrivateController,
+                    LaravelTestingTools\LaravelCore\Http\Controller\ApiController,
+                    LaravelTestingTools\LaravelCore\Http\Controller\ViewController
+                "/>
+                <element key="Illuminate\Foundation\Testing\TestCase" value="PhpNotDead\LaravelTestingTools\FeatureTestCase,
+                    PhpNotDead\LaravelTestingTools\ControllerTestCase,
+                    PhpNotDead\LaravelTestingTools\UnitTestCase
+                "/>
+                <element key="Test\TestCase" value="PhpNotDead\LaravelTestingTools\FeatureTestCase,
+                    PhpNotDead\LaravelTestingTools\ControllerTestCase,
+                    PhpNotDead\LaravelTestingTools\UnitTestCase
+                "/>
+            </property>
+        </properties>
+        <exclude-pattern>src/DataTransferObject/*</exclude-pattern>
+        <exclude-pattern>src/Model/Model.php</exclude-pattern>
+        <exclude-pattern>src/Database/Faker.php</exclude-pattern>
+        <exclude-pattern>src/Http/Controller/Controller.php</exclude-pattern>
+        <exclude-pattern>app/Http/Controllers/Controller.php</exclude-pattern>
+        <exclude-pattern>src/Http/Controller/ApiController.php</exclude-pattern>
+        <exclude-pattern>src/Http/Controller/ViewController.php</exclude-pattern>
+        <exclude-pattern>src/Database/Migration.php</exclude-pattern>
+        <exclude-pattern>*TestCase.php</exclude-pattern>
+    </rule>
+
+    <rule ref="OpaySniffs.Files.ForbiddenCode">
+        <properties>
+            <property name="forbiddenCode" type="array">
+                <element key="Illuminate\Support\Facades\Cache" value="LaravelTestingTools\LaravelCore\Cache\CacheManager"/>
+                <element key="Illuminate\Contracts\Cache\Store\TaggedCache" value="LaravelTestingTools\LaravelCore\Cache\CacheManager"/>
+                <element key="cache()" value="LaravelTestingTools\LaravelCore\Cache\CacheManager"/>
+            </property>
+        </properties>
+        <exclude-pattern>src/Cache/CacheManager.php$</exclude-pattern>
+        <exclude-pattern>src/Console/CacheForgetByPatternCommand.php$</exclude-pattern>
+        <exclude-pattern>src/Console/CacheKeysViewCommand.php$</exclude-pattern>
+        <exclude-pattern>src/Test/Helper/MocksCache.php$</exclude-pattern>
+        <exclude-pattern>test/Unit/Cache/CacheManagerTest.php$</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="print" value="echo"/>
+                <!-- Replace plain PHP with Laravel functions-->
+                <element key="is_dir" value="File::isDirectory"/>
+                <element key="exists" value="File::exists"/>
+                <element key="foreach" value="collect()->each(), collect()->map(), collect()->filter() and other collect()->..."/>
+                <element key="array_filter" value="collect()->filter"/>
+                <element key="array_merge" value="collect()->merge"/>
+                <element key="array_keys" value="collect()->keys"/>
+                <element key="array_key_exists" value="collect()->has"/>
+                <element key="array_search" value="collect()->search"/>
+                <element key="in_array" value="collect()->contains"/>
+                <element key="explode" value="Str::of(...)->explode"/>
+                <!-- Disallow some Laravel functions-->
+                <element key="throw_if" value="if(...) -> throw new"/>
+                <element key="throw_unless" value="if(...) -> throw new"/>
+            </property>
+        </properties>
+        <exclude-pattern>*Test.php</exclude-pattern>
+        <exclude-pattern>*Module/Config/*.php</exclude-pattern>
+        <exclude-pattern>*config/*.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.StaticClosure">
+        <exclude-pattern>*Database/Factory/*$</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
+        <exclude-pattern>*/*Helper*.php$</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>src/Entity/*.php$</exclude-pattern>
+        <exclude-pattern>src/Exception/Handler.php$</exclude-pattern>
+        <exclude-pattern>src/DataTransferObject/*.php$</exclude-pattern>
+        <exclude-pattern>src/ValidationRule/*.php$</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*Message.php</exclude-pattern>
+        <exclude-pattern>*CacheKey.php</exclude-pattern>
+        <exclude-pattern>*CacheTag.php</exclude-pattern>
+    </rule>
+
+</ruleset>

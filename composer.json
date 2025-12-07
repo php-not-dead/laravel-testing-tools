@@ -1,0 +1,49 @@
+{
+    "name": "php-not-dead/laravel-testing-tools",
+    "type": "library",
+    "description": "Laravel Testing Tools library",
+    "keywords": ["phpunit", "phpcs", "phpcsfixer"],
+    "authors": [{
+        "name": "Vitalij Vladimirov",
+        "email": "vitalij@cto4sale.com",
+        "homepage": "https://www.cto4sale.com"
+    }],
+    "require": {
+        "php": "^8.5"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "opay-dev/php-linting-tools": "1.*",
+        "phpunit/phpunit": "12.*",
+        "mockery/mockery": "1.*",
+        "laravel/framework": "12.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpNotDead\\LaravelTestingTools\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test"
+        }
+    },
+    "scripts": {
+        "lint": [
+            "vendor/bin/php-cs-fixer fix . --dry-run --verbose",
+            "vendor/bin/phpcs -p --standard=src/Config/phpcs.xml . --ignore=./vendor"
+        ],
+        "lint:fix": [
+            "vendor/bin/php-cs-fixer fix . --verbose",
+            "vendor/bin/phpcbf -p --standard=src/Config/phpcs.xml . --ignore=./vendor"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true,
+            "wikimedia/composer-merge-plugin": true
+        }
+    },
+    "minimum-stability": "stable"
+}
