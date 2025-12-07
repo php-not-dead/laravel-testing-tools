@@ -88,3 +88,7 @@ workflow.yml
         - name: Validate vendors
           run: php vendors_validator.php --skip=${{ env.VENDORS_VALIDATOR_SKIP }}
 ```
+
+Failed workflow example:
+
+<a href="readme/images/vendors_validator_workflow.jpg"><img src="readme/images/vendors_validator_workflow.jpg" width="400" alt="Failed workflow example"></a>
