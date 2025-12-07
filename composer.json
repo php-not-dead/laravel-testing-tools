@@ -9,13 +9,13 @@
         "homepage": "https://www.cto4sale.com"
     }],
     "require": {
-        "php": "^8.5"
+        "php": "^8.5",
+        "opay-dev/php-linting-tools": "1.*",
+        "phpunit/phpunit": "12.*",
+        "mockery/mockery": "1.*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "opay-dev/php-linting-tools": "1.*",
-        "phpunit/phpunit": "12.*",
-        "mockery/mockery": "1.*",
         "laravel/framework": "12.*"
     },
     "autoload": {
