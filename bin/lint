@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [ -f "/app/config/csfixer.php" ]; then
+  PHP_CS_FIXER_CONFIG="config/csfixer.php"
+else
+  PHP_CS_FIXER_CONFIG="vendor/php-not-dead/laravel-testing-tools/src/Config/csfixer.php"
+fi
+
+if [ -f "/app/config/phpcs.xml" ]; then
+  PHP_CS_CONFIG="config/phpcs.xml"
+else
+  PHP_CS_CONFIG="vendor/php-not-dead/laravel-testing-tools/src/Config/phpcs.xml"
+fi
+
+if [ -z "$1" ]; then
+
+    /app/vendor/bin/php-cs-fixer fix --config="$PHP_CS_FIXER_CONFIG" --dry-run --verbose
+    /app/vendor/bin/phpcs -p --standard="$PHP_CS_CONFIG" /app
+
+elif [ "$1" == "fix" ] && [ -z "$2" ]; then
+
+    /app/vendor/bin/php-cs-fixer fix --config="$PHP_CS_FIXER_CONFIG" --verbose
+    /app/vendor/bin/phpcbf -p --standard="$PHP_CS_CONFIG" /app
+
+elif [ "$1" == "fix" ]; then
+
+    if [ "$(echo "$2" | cut -c0-5)" == "/app/" ]; then
+        FILE="$2"
+    elif [ "$(echo "$2" | cut -c0-4)" == "app/" ]; then
+        FILE="/$2"
+    else
+        FILE="/app/$2"
+    fi;
+
+    /app/vendor/bin/php-cs-fixer fix --config="$PHP_CS_FIXER_CONFIG" "$FILE" --verbose
+    /app/vendor/bin/phpcbf -p --standard="$PHP_CS_CONFIG" "$FILE"
+
+else
+
+    if [ "$(echo "$1" | cut -c0-5)" == "/app/" ]; then
+        FILE="$1"
+    elif [ "$(echo "$1" | cut -c0-4)" == "app/" ]; then
+        FILE="/$1"
+    else
+        FILE="/app/$1"
+    fi;
+
+    /app/vendor/bin/php-cs-fixer fix --config="$PHP_CS_FIXER_CONFIG" "$FILE" --dry-run --verbose
+    /app/vendor/bin/phpcs -p --standard="$PHP_CS_CONFIG" "$FILE"
+
+fi;
