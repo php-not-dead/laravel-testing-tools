@@ -51,13 +51,13 @@
                     LaravelTestingTools\LaravelCore\Http\Controller\ApiController,
                     LaravelTestingTools\LaravelCore\Http\Controller\ViewController
                 "/>
-                <element key="Illuminate\Foundation\Testing\TestCase" value="PhpNotDead\LaravelTestingTools\FeatureTestCase,
-                    PhpNotDead\LaravelTestingTools\ControllerTestCase,
-                    PhpNotDead\LaravelTestingTools\UnitTestCase
+                <element key="Illuminate\Foundation\Testing\TestCase" value="Elph\LaravelTestingTools\FeatureTestCase,
+                    Elph\LaravelTestingTools\ControllerTestCase,
+                    Elph\LaravelTestingTools\UnitTestCase
                 "/>
-                <element key="Test\TestCase" value="PhpNotDead\LaravelTestingTools\FeatureTestCase,
-                    PhpNotDead\LaravelTestingTools\ControllerTestCase,
-                    PhpNotDead\LaravelTestingTools\UnitTestCase
+                <element key="Test\TestCase" value="Elph\LaravelTestingTools\FeatureTestCase,
+                    Elph\LaravelTestingTools\ControllerTestCase,
+                    Elph\LaravelTestingTools\UnitTestCase
                 "/>
             </property>
         </properties>
