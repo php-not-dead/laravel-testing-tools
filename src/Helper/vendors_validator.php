@@ -15,7 +15,7 @@ declare(strict_types=1);
  * Example: vendor/elph-studio/laravel-testing-tools/src/Helper/vendors_validator.php --skip=test/first,test/second
  */
 return new class () {
-    private const string COMPOSER = './composer.lock';
+    private const string DEFAULT_COMPOSER_LOCATION = './composer.lock';
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ return new class () {
         echo $this->color("\nSuccess! All vendors passed validation.", 'success');
     }
 
-    private function getSkippedVendors(): array
+    private function getSkippedPackages(): array
     {
         $options = getopt('', ['skip:']);
 
@@ -40,19 +40,35 @@ return new class () {
         return array_combine($skip, $skip);
     }
 
+    private function getCustomComposerLocation(): string|null
+    {
+        $options = getopt('', ['composer:']);
+
+        if (empty($options['composer']) === true) {
+            return null;
+        }
+
+        $composer = explode(',', $options['composer'])[0];
+        if (file_exists($composer) === false) {
+            throw new RuntimeException('Custom composer.lock file not found');
+        }
+
+        return $composer;
+    }
+
     private function validate(): bool
     {
         $composer = $this->getComposer();
-        $vendors = $this->getVendors($composer);
+        $packages = $this->getPackages($composer);
 
-        if (count($vendors) === 0) {
+        if (count($packages) === 0) {
             return true;
         }
 
-        $skip = $this->getSkippedVendors();
+        $skip = $this->getSkippedPackages();
 
         $pass = true;
-        foreach ($vendors as $vendor => $version) {
+        foreach ($packages as $vendor => $version) {
             if ($this->validateVendor($vendor, $version, $skip) === true) {
                 continue;
             }
@@ -65,12 +81,12 @@ return new class () {
 
     private function getComposer(): array
     {
-        $json = file_get_contents(self::COMPOSER);
+        $content = file_get_contents($this->getCustomComposerLocation() ?? self::DEFAULT_COMPOSER_LOCATION);
 
-        return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
     }
 
-    private function getVendors(array $composer): array
+    private function getPackages(array $composer): array
     {
         $packages = $composer['packages'];
         if (array_key_exists('packages-dev', $composer)) {
