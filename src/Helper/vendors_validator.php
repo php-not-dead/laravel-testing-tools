@@ -40,27 +40,14 @@ return new class () {
         return array_combine($skip, $skip);
     }
 
-    private function getCustomComposerLocation(): string|null
-    {
-        $options = getopt('', ['composer:']);
-
-        if (empty($options['composer']) === true) {
-            return null;
-        }
-
-        $composer = explode(',', $options['composer'])[0];
-        if (file_exists($composer) === false) {
-            throw new RuntimeException('Custom composer.lock file not found');
-        }
-
-        return $composer;
-    }
-
     private function validate(): bool
     {
         $composer = $this->getComposer();
-        $packages = $this->getPackages($composer);
+        if ($composer === null) {
+            return false;
+        }
 
+        $packages = $this->getPackages($composer);
         if (count($packages) === 0) {
             return true;
         }
@@ -79,9 +66,21 @@ return new class () {
         return $pass;
     }
 
-    private function getComposer(): array
+    private function getComposer(): array|null
     {
-        $content = file_get_contents($this->getCustomComposerLocation() ?? self::DEFAULT_COMPOSER_LOCATION);
+        $options = getopt('', ['composer:']);
+        if (empty($options['composer']) !== true) {
+            $composer = explode(',', $options['composer'])[0];
+        }
+
+        $composer ??= self::DEFAULT_COMPOSER_LOCATION;
+        if (file_exists($composer) === false) {
+            echo $this->color('composer.lock file not found' . "\n",'success');
+
+            return null;
+        }
+
+        $content = file_get_contents($composer);
 
         return json_decode($content, true, 512, JSON_THROW_ON_ERROR);
     }
