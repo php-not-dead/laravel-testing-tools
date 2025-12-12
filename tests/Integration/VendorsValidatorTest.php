@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Test\Integration;
 
 use Elph\LaravelTestingTools\Test\TestCase\IntegrationTestCase;
 use Generator;
 use JetBrains\PhpStorm\ArrayShape;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Helper\ComposerLockBuilder;
+use Test\Helper\ComposerLockBuilder;
 
 class VendorsValidatorTest extends IntegrationTestCase
 {

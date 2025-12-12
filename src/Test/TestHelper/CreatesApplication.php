@@ -11,8 +11,9 @@ use RuntimeException;
 trait CreatesApplication
 {
     private array $possibleAppLocations = [
-        'bootstrap/app.php',
-        'tests/bootstrap.php',
+        'bootstrap/app.php', // Application testing
+        'vendor/elph-studio/laravel-testing-tools/src/Test/bootstrap.php', // Library testing
+        'src/Test/bootstrap.php', // Testing tools library testing
     ];
 
     public function createApplication(): Application
