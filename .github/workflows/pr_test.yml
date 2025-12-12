@@ -57,7 +57,9 @@ jobs:
           composer-options: --no-progress --prefer-dist --optimize-autoloader
 
       - name: Prepare PHP Unit config
-        run: sed -i "s/\/app/$(pwd)/g" ${{ env.PHPUNIT_CONFIG }}
+        run: |
+          REAL_PATH=$(printf '%s\n' "$(pwd)" | sed 's/[\/&]/\\&/g')
+          sed -i "s/\/app/$REAL_PATH/g" ${{ env.PHPUNIT_CONFIG }}
 
       - name: Run phpunit
         run: vendor/bin/phpunit --config=${{ env.PHPUNIT_CONFIG }} --bootstrap=${{ env.PHPUNIT_BOOTSTRAP }}
