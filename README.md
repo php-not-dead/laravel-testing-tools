@@ -11,21 +11,21 @@ It also includes vendor testing tool that can be run during GitHub workflow to d
 ### PHP Unit configuration contains
 
 1. Test Cases
-    - [Controller Test Case](src/Test/TestCase/ControllerTestCase.php) - for Http requests testing
-    - [Feature Test Case](src/Test/TestCase/FeatureTestCase.php) - for PHP features testing
-    - [Unit Test Case](src/Test/TestCase/UnitTestCase.php) - for Unit testing
+    - [Unit Test Case](src/Test/TestCase/UnitTestCase.php)
+    - [Integration Test Case](src/Test/TestCase/IntegrationTestCase.php)
+    - [Feature Test Case](src/Test/TestCase/FeatureTestCase.php)
 2. [Configuration file](src/Config/phpunit.xml)
     - Works with default tests directories _(these must be created)_:
-      - `tests/Controller`
-      - `tests/Feature`
       - `tests/Unit`
+      - `tests/Integration`
+      - `tests/Feature`
     - Also works with Laravel Modules _(not mandatory)_:
-      - `Module/*/Test/Controller`
-      - `Module/*/*/Test/Controller`
-      - `Module/*/Test/Feature`
-      - `Module/*/*/Test/Feature`
       - `Module/*/Test/Unit`
       - `Module/*/*/Test/Unit`
+      - `Module/*/Test/Integration`
+      - `Module/*/*/Test/Integration`
+      - `Module/*/Test/Feature`
+      - `Module/*/*/Test/Feature`
     - Configuration file will be used only if there is no local configuration file `config/phpunit.xml`
 
 
@@ -49,13 +49,24 @@ Install
 Run PHP Unit tests:
 > vendor/bin/unit
 
+Run PHP Unit tests to test by specific filter:
+> vendor/bin/unit someSpecificTestOrTestsCategory
+
 Run Linting tools _(run both PHP CS and PHP CS Fixer)_:
 
 > vendor/bin/lint
 
+Run Linting tools to test exact file or directory:
+
+> vendor/bin/lint path/to/file/or/directory
+
 Automatic Lint fixing:
 
 > vendor/bin/lint fix
+
+Automatic Lint fixing of specific file or directory:
+
+> vendor/bin/lint fix path/to/file/or/directory
 
 
 ### Running Vendors Validator in GitHub Workflow

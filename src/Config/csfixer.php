@@ -17,7 +17,7 @@ $finder = Finder::create()
         'vendor',
     ]);
 
-$cacheDirectory = '/app/storage/app/tmp/';
+$cacheDirectory = '/tmp/';
 
 // phpcs:ignore Generic.PHP.ForbiddenFunctions
 $cacheFilePath = (is_dir($cacheDirectory) ? $cacheDirectory : '') . '.php-cs-fixer.cache.json';

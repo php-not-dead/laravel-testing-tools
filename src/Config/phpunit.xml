@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
-         bootstrap="../../../../autoload.php"
-         colors="true"
-         cacheDirectory="../../../../../storage/framework/cache"
->
+<phpunit colors="true" bootstrap="/app/vendor/autoload.php" cacheDirectory="/tmp">
   <coverage/>
   <testsuites>
     <testsuite name="Unit">
-      <directory>../../../../../tests/Unit</directory>
-      <directory>../../../../../Module/*/Test/Unit</directory>
-      <directory>../../../../../Module/*/*/Test/Unit</directory>
-    </testsuite>
-    <testsuite name="Feature">
-      <directory>../../../../../tests/Feature</directory>
-      <directory>../../../../../Module/*/Test/Feature</directory>
-      <directory>../../../../../Module/*/*/Test/Feature</directory>
+      <directory>/app/tests/Unit</directory>
+      <directory>/app/Module/*/Test/Unit</directory>
+      <directory>/app/Module/*/*/Test/Unit</directory>
     </testsuite>
     <testsuite name="Controller">
-      <directory>../../../../../tests/Controller</directory>
-      <directory>../../../../../Module/*/Test/Controller</directory>
-      <directory>../../../../../Module/*/*/Test/Controller</directory>
+      <directory>/app/tests/Integration</directory>
+      <directory>/app/Module/*/Test/Integration</directory>
+      <directory>/app/Module/*/*/Test/Integration</directory>
+    </testsuite>
+    <testsuite name="Feature">
+      <directory>/app/tests/Feature</directory>
+      <directory>/app/Module/*/Test/Feature</directory>
+      <directory>/app/Module/*/*/Test/Feature</directory>
     </testsuite>
   </testsuites>
   <php>
@@ -28,17 +23,16 @@
     <env name="APP_ENV" value="testing"/>
     <env name="TEST_MODE" value="false"/>
     <env name="BCRYPT_ROUNDS" value="4"/>
-    <env name="CACHE_DRIVER" value="array"/>
+    <env name="CACHE_DRIVER" value="sqlite"/>
     <env name="DB_CONNECTION" value="sqlite"/>
     <env name="DB_DATABASE" value=":memory:"/>
-    <env name="MAIL_MAILER" value="array"/>
     <env name="QUEUE_CONNECTION" value="sync"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="TELESCOPE_ENABLED" value="false"/>
   </php>
   <source>
     <include>
-      <directory suffix=".php">../../../../../</directory>
+      <directory suffix=".php">/app</directory>
     </include>
   </source>
 </phpunit>
