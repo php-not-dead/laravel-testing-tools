@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Test\Feature;
 
 use Elph\LaravelTestingTools\Test\TestCase\FeatureTestCase;
 

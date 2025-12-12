@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Test\Unit;
 
 use Elph\LaravelTestingTools\Test\TestCase\UnitTestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Helper;
+namespace Test\Helper;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -32,9 +32,10 @@ class ComposerLockBuilder
 
         $json = json_encode($composerLock, JSON_THROW_ON_ERROR);
 
-        file_put_contents(self::GITHUB_COMPOSER_LOCATION, $json);
+        $tempComposerLock = $this->getTemporaryComposerLocation();
+        file_put_contents($tempComposerLock, $json);
 
-        return self::GITHUB_COMPOSER_LOCATION;
+        return $tempComposerLock;
     }
 
     /**
