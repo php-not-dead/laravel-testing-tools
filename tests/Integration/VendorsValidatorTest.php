@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Integration;
 
-use Elph\LaravelTestingTools\Test\TestCase\FeatureTestCase;
+use Elph\LaravelTestingTools\Test\TestCase\IntegrationTestCase;
 use Generator;
 use JetBrains\PhpStorm\ArrayShape;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Helper\ComposerLockBuilder;
 
-class VendorsValidatorTest extends FeatureTestCase
+class VendorsValidatorTest extends IntegrationTestCase
 {
     private const string VENDOR_VALIDATOR = 'src/Helper/vendors_validator.php';
     private ComposerLockBuilder $builder;

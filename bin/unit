@@ -7,11 +7,15 @@ if [ -z "$PHP_UNIT_BIN" ]; then
 fi
 
 if [ -f "/app/config/phpunit.xml" ]; then
-  CONFIG="config/phpunit.xml"
-elif [ -f "vendor/elph-studio/laravel-testing-tools/src/Config/phpunit.xml" ]; then
-  CONFIG="vendor/elph-studio/laravel-testing-tools/src/Config/phpunit.xml"
+  CONFIG="/app/config/phpunit.xml"
+elif [ -f "/app/vendor/elph-studio/laravel-testing-tools/src/Config/phpunit.xml" ]; then
+  CONFIG="/app/vendor/elph-studio/laravel-testing-tools/src/Config/phpunit.xml"
+elif [ -f "/app/src/Config/phpunit.xml" ]; then
+  CONFIG="/app/src/Config/phpunit.xml"
 else
-  CONFIG="tests/phpunit.xml"
+  echo "ERROR: PHP Unit config not found."
+
+  return 255
 fi
 
 PHP_UNIT_BIN=$(echo $PHP_UNIT_BIN|tr -d '\n')

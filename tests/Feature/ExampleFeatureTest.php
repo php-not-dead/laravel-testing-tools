@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Controller;
+namespace Tests\Feature;
 
-use Elph\LaravelTestingTools\Test\TestCase\ControllerTestCase;
+use Elph\LaravelTestingTools\Test\TestCase\FeatureTestCase;
 
-class ExampleControllerTest extends ControllerTestCase
+class ExampleFeatureTest extends FeatureTestCase
 {
     /**
      * A basic test example.

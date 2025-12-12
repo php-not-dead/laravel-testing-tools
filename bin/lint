@@ -2,18 +2,26 @@
 
 if [ -f "/app/config/csfixer.php" ]; then
   PHP_CS_FIXER_CONFIG="config/csfixer.php"
-elif [ -f "vendor/elph-studio/laravel-testing-tools/src/Config/csfixer.php" ]; then
-  PHP_CS_FIXER_CONFIG="vendor/elph-studio/laravel-testing-tools/src/Config/csfixer.php"
+elif [ -f "/app/vendor/elph-studio/laravel-testing-tools/src/Config/csfixer.php" ]; then
+  PHP_CS_FIXER_CONFIG="/app/vendor/elph-studio/laravel-testing-tools/src/Config/csfixer.php"
+elif [ -f "/app/src/Config/csfixer.php" ]; then
+  PHP_CS_FIXER_CONFIG="/app/src/Config/csfixer.php"
 else
-  PHP_CS_FIXER_CONFIG="src/Config/csfixer.php"
+  echo "ERROR: PHP CS FIXER config not found."
+  
+  return 255
 fi
 
 if [ -f "/app/config/phpcs.xml" ]; then
-  PHP_CS_CONFIG="config/phpcs.xml"
-elif [ -f "vendor/elph-studio/laravel-testing-tools/src/Config/phpcs.xml" ]; then
-  PHP_CS_CONFIG="vendor/elph-studio/laravel-testing-tools/src/Config/phpcs.xml"
+  PHP_CS_CONFIG="/app/config/phpcs.xml"
+elif [ -f "/app/vendor/elph-studio/laravel-testing-tools/src/Config/phpcs.xml" ]; then
+  PHP_CS_CONFIG="/app/vendor/elph-studio/laravel-testing-tools/src/Config/phpcs.xml"
+elif [ -f "/app/tests/phpcs.xml" ]; then
+  PHP_CS_CONFIG="/app/tests/phpcs.xml"
 else
-  PHP_CS_CONFIG="tests/phpcs.xml"
+  echo "ERROR: PHP CS config not found."
+
+  return 255
 fi
 
 if [ -z "$1" ]; then
