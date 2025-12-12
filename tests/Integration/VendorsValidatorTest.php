@@ -33,7 +33,7 @@ class VendorsValidatorTest extends IntegrationTestCase
 
         // Execution
         exec(
-            sprintf('php %s --composer=%s', self::VENDOR_VALIDATOR, $composer),
+            sprintf('php %s --composer=%s 2> /dev/null', self::VENDOR_VALIDATOR, $composer),
             $output,
             $exitCode
         );
@@ -98,7 +98,12 @@ class VendorsValidatorTest extends IntegrationTestCase
 
         // Execution
         exec(
-            sprintf('php %s --composer=%s --skip=%s', self::VENDOR_VALIDATOR, $composer, implode(',', $skip)),
+            sprintf(
+                'php %s --composer=%s --skip=%s 2> /dev/null',
+                self::VENDOR_VALIDATOR,
+                $composer,
+                implode(',', $skip)
+            ),
             $output,
             $exitCode
         );
@@ -186,7 +191,12 @@ class VendorsValidatorTest extends IntegrationTestCase
 
         // Execution
         exec(
-            sprintf('php %s --composer=%s --skip=%s', self::VENDOR_VALIDATOR, $composer, implode(',', $skip)),
+            sprintf(
+                'php %s --composer=%s --skip=%s 2> /dev/null',
+                self::VENDOR_VALIDATOR,
+                $composer,
+                implode(',', $skip)
+            ),
             $output,
             $exitCode
         );
@@ -266,7 +276,7 @@ class VendorsValidatorTest extends IntegrationTestCase
     {
         // Execution
         exec(
-            sprintf('php %s --composer=non_existing_composer.lock', self::VENDOR_VALIDATOR),
+            sprintf('php %s --composer=non_existing_composer.lock 2> /dev/null', self::VENDOR_VALIDATOR),
             $output,
             $exitCode
         );
