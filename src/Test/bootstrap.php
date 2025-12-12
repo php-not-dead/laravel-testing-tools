@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This bootstrap is required for libraries testing, since they don't have standard Laravel structure
+ * While testing Laravel apps, use default bootstrap/app.php
+ */
+
 declare(strict_types=1);
 
 use Illuminate\Foundation\Application;
