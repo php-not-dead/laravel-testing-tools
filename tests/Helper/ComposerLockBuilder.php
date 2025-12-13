@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\File;
 
 class ComposerLockBuilder
 {
-    private const string SOURCE_COMPOSER_LOCATION = 'tests/Fixtures/composer.lock.source';
+    private const string SOURCE_COMPOSER_LOCATION = 'tests/Fixture/composer.lock.source';
     private const string DOCKER_COMPOSER_LOCATION = '/tmp/composer.lock';
-    private const string GITHUB_COMPOSER_LOCATION = 'tests/Fixtures/composer.lock';
+    private const string GITHUB_COMPOSER_LOCATION = 'tests/Fixture/composer.lock';
 
     private array $fixturePackages;
 
