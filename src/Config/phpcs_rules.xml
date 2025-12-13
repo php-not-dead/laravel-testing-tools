@@ -51,8 +51,9 @@
         <exclude-pattern>src/Model/Model.php</exclude-pattern>
         <exclude-pattern>src/Faker/Faker.php</exclude-pattern>
         <exclude-pattern>src/Seeder/Seeder.php</exclude-pattern>
-        <exclude-pattern>src/Seeder/DatabaseSeeder.php</exclude-pattern>
+        <exclude-pattern>src/Seeder/SeedersRunner.php</exclude-pattern>
         <exclude-pattern>src/Migration/Migration.php</exclude-pattern>
+        <exclude-pattern>src/Migration/Blueprint.php</exclude-pattern>
         <exclude-pattern>*TestCase.php</exclude-pattern>
     </rule>
 
